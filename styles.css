@@ -27,3 +27,13 @@
 .presentation-body .detail-button{align-self:flex-start}
 @media(max-width:900px){.main-nav{gap:14px}.presentation-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:680px){.presentation-grid{grid-template-columns:1fr}.presentation-body{padding:19px}.presentation-body h3{font-size:20px}}
+
+/* Experience and research hierarchy */
++.experience-section{background:#f7fbfd}
++.experience-card{box-shadow:0 8px 27px rgba(38,80,113,.05)}
++.credentials-strip{display:flex;align-items:flex-start;gap:16px;margin-top:20px;padding:19px 22px;border:1px solid #dcebf1;border-radius:15px;background:#f7fbfd}
++.credentials-badge{flex:none;width:35px;height:35px;border-radius:10px;display:grid;place-items:center;background:#e7f6f7;color:#169da8;font-size:20px}
++.credentials-strip strong{display:block;color:#183c58;font-size:15px;margin:0 0 4px}
++.credentials-strip p{margin:0;color:#647787;font-size:13px;line-height:1.8}
++@media(max-width:680px){.credentials-strip{padding:17px;gap:12px}}
++
