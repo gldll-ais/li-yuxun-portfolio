@@ -84,7 +84,7 @@ const projectDetails = {
     actions: ['主持立项申报、文献检索、实验方案设计和进度统筹。', '组织复水率、质构、水分分布、表面疏水性、挥发性风味和色度等指标检测。', '汇总阶段性数据、图表及分析文本，支持中期检查。'],
     result: '阶段性成果附件记录了 6 类指标数据、2 幅综合图表和论文初稿相关材料；项目仍在推进。',
     caveat: '阶段数据中的部分样本量有限，趋势按探索性结果表述，不预设结题结论。',
-    files: [['SRIP 阶段性成果附件', 'evidence/shrimp-stage.pdf', 'PDF 查看']]
+    files: []
   },
   gel: {
     category: '校级重点 SRIP / 2026.03—至今', title: '虾糜凝胶综合质量评价',
@@ -93,7 +93,7 @@ const projectDetails = {
     actions: ['承担消化特性与抗氧化能力测定。', '参与低场核磁共振实验与数据整理。', '为项目多指标评价提供测定数据支撑。'],
     result: '形成实验设计与阶段性测定记录，项目仍在推进。',
     caveat: '实验设计为项目组材料，此处仅按本人作品集记录的分工作说明。',
-    files: [['项目实验设计', 'evidence/gel-experiment-design.pdf', 'PDF 查看']]
+    files: []
   },
   slidesGermany: {
     category: '课程演示 / 德语国家概况', title: '写下来的德国',
@@ -174,6 +174,7 @@ document.querySelectorAll('[data-open]').forEach(button => button.addEventListen
   document.querySelector('#dialog-actions').replaceChildren(...detail.actions.map(action => {
     const item = document.createElement('li'); item.textContent = action; return item;
   }));
+  document.querySelector('.evidence-section').hidden = detail.files.length === 0;
   document.querySelector('#dialog-files').replaceChildren(...detail.files.map(([label, path, type]) => {
     const link = document.createElement('a');
     link.className = 'file-link'; link.href = path; link.target = '_blank'; link.rel = 'noopener noreferrer';
