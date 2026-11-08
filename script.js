@@ -95,6 +95,33 @@ const projectDetails = {
     caveat: '实验设计为项目组材料，此处仅按本人作品集记录的分工作说明。',
     files: [['项目实验设计', 'evidence/gel-experiment-design.pdf', 'PDF 查看']]
   },
+  slidesGermany: {
+    category: '课程演示 / 德语国家概况', title: '写下来的德国',
+    lead: '用一套边界清晰的视觉叙事，讲述德国规则文化。',
+    context: '课程作业需要解释德国日常规则与法治传统的关系，并让非专业听众跟上论述。',
+    actions: ['以住户规则为入口，按生活场景、制度执行和历史脉络安排内容。', '使用手稿、地图和文献式版面保持 13 页的视觉一致性。', '用示意图和关键词降低抽象概念的阅读门槛。'],
+    result: '完成 13 页演示稿，呈现从家庭规则到公共规则的叙事线。',
+    caveat: '课程作业公开版已遮盖学号；内容用于展示演示设计与信息组织能力。',
+    files: [['13 页演示稿', 'assets/presentations/germany-rules.pdf', 'PDF 查看']]
+  },
+  slidesTakeout: {
+    category: '课程演示 / 小组汇报', title: '外卖“三国杀”里的中国方案',
+    lead: '把小组研究材料整理成便于讲述的演示稿。',
+    context: '课程汇报需要把即时零售平台竞争与相关理论放在一条清楚的叙事线上。',
+    actions: ['承担材料检索与 PPT 制作；组员共同参与汇报。', '将市场格局、矛盾分析和治理思路分成章节，并设计统一的插画与配色。', '使用对比表、流程图和分层信息框辅助口头讲解。'],
+    result: '完成 18 页课程小组汇报演示稿。',
+    caveat: '封面明确列出本人负责材料检索与 PPT 制作，汇报由小组成员完成。公开文件为原始 PPTX 导出的 PDF。',
+    files: [['18 页演示稿', 'assets/presentations/takeout-platforms.pdf', 'PDF 查看']]
+  },
+  slidesMaintenance: {
+    category: '课程演示 / 食品机械与设备', title: '食品机械预测性维护',
+    lead: '用图像和流程解释设备数据如何转为维护决策。',
+    context: '食品机械课程展示涉及传感器、数据分析与维护方式，需要将技术内容讲得直观。',
+    actions: ['按感知、传输、分析与决策组织讲述顺序。', '将设备示意、状态趋势和案例放入统一的深色工业视觉体系。', '在页面中标注案例与图片资料来源。'],
+    result: '完成 11 页技术演示稿。',
+    caveat: '为课程作业与案例分析，不代表实际工厂部署；公开版已遮盖学号。',
+    files: [['11 页演示稿', 'assets/presentations/predictive-maintenance.pdf', 'PDF 查看']]
+  },
   academic: {
     category: '学术成果 / 2025', title: 'SCI 论文与软件著作权',
     lead: '参与论文研究与软件成果登记。',
