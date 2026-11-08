@@ -58,7 +58,7 @@ const projectDetails = {
     caveat: '这是个人数字化项目，体现信息组织与工具搭建能力。',
     files: [
       ['项目经历说明', 'evidence/uni-project-summary.html', '在线查看'],
-      ['单文件应用', 'evidence/uni-source.html', '打开应用']
+      ['UNI v5 工作台', 'evidence/uni-v5.html', '打开应用']
     ]
   },
   engineering: {
