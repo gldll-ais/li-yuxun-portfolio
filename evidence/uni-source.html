@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html data-page-node-id="NXwQNFtJ4IbrGswWEAxzgx" lang="zh-CN">
+<head data-page-node-id="7vIplnu8D80k3FjFzuCAox">
+<script data-page-node-id="JtX76pWnqgrK0gsVV9eTAU" src="/page/page_comm/inject.js"></script>
+<meta data-page-node-id="lBtv1lsb6LWd91c67wENZy" charset="UTF-8">
+<meta data-page-node-id="mIhwQBC3dfAPEyE4TjLWFe" content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
+<meta data-page-node-id="uJvukKqQ5GJbFIzhE66sra" content="#F7F1EE" name="theme-color">
+<title data-page-node-id="FfuYbYFJIZCHCiYYwF9ueo" data-pnid-children="ONo09ZNZykgyagv92noJZm">保研工作台</title>
+<!--pnid:vWY5gmtzsvk8Ns9WhezZtz--><!-- 本工作台通过 WorkBuddy「资料库」skill 搭建、存储和部署 -->
+<style data-page-node-id="Io3cJqW9JKdATTuQKQ7wbp" data-pnid-children="aIFNn5OLwLuJXUDsVnw6TE">
+:root{
+  --bg:#F7F1EE; --card:#FFFFFF; --sidebar:#F1E4E7; --sidebar-deep:#E9D7DC;
+  --primary:#C78B98; --primary-deep:#A96F7E; --primary-soft:#EBD4DA; --primary-ghost:#F6EAED;
+  --text:#55454A; --text-sub:#948083; --text-faint:#B8A7AC;
+  --border:#EAD8DD; --border-soft:#F3E7EB;
+  --danger:#C97B7B; --danger-soft:#F3DCDC; --danger-line:#E0A6A6;
+  --warning:#C79A63; --warning-soft:#F4E7D3; --warning-line:#DDB98A;
+  --success:#8FA98B; --success-soft:#E2EBDF;
+  --blue:#8BA3B5; --blue-soft:#E0E8EE;
+  --shadow:0 2px 10px rgba(169,111,126,.06);
+  --radius:16px; --radius-sm:11px;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html,body{height:100%;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Roboto,sans-serif;
+  background:var(--bg); color:var(--text); font-size:15px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+button{font-family:inherit; cursor:pointer; border:none; background:none; color:inherit;}
+a{color:var(--primary-deep); text-decoration:none;}
+input,select,textarea{
+  font-family:inherit; font-size:16px; color:var(--text);
+  background:#fff; border:1px solid var(--border); border-radius:var(--radius-sm);
+  padding:10px 12px; outline:none; transition:border .2s, box-shadow .2s; width:100%;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-soft);}
+::placeholder{color:var(--text-faint);}
+
+/* ===== 布局 ===== */
+.app{display:flex; min-height:100vh;}
+
+/* 侧边栏 */
+.sidebar{
+  width:224px; flex-shrink:0; background:var(--sidebar);
+  display:flex; flex-direction:column; position:sticky; top:0; height:100vh;
+  border-right:1px solid var(--border); transition:width .25s ease; overflow:hidden; z-index:20;
+}
+.sidebar.collapsed{width:72px;}
+.sidebar-header{display:flex; align-items:center; gap:10px; padding:18px 16px 12px;}
+.sidebar .logo-badge{
+  width:40px; height:40px; border-radius:12px; background:linear-gradient(135deg,#D9A3AE,#C78B98);
+  display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 3px 8px rgba(199,139,152,.3);
+}
+.sidebar .site-title{font-size:17px; font-weight:700; color:var(--primary-deep); white-space:nowrap; letter-spacing:.5px;}
+.collapse-wrap{padding:0 16px 8px;}
+.collapse-btn{
+  width:100%; min-height:40px; border-radius:var(--radius-sm); background:#fff; border:1px solid var(--border);
+  color:var(--text-sub); display:flex; align-items:center; justify-content:center; gap:8px; font-size:13px;
+  transition:.2s;
+}
+.collapse-btn:hover{background:var(--primary-ghost); color:var(--primary-deep);}
+.collapse-btn svg{flex-shrink:0;}
+.collapse-btn .c-text{white-space:nowrap;}
+
+.nav{flex:1; padding:6px 12px; display:flex; flex-direction:column; gap:6px; overflow-y:auto;}
+.nav-item{
+  display:flex; align-items:center; gap:12px; padding:11px 12px; border-radius:var(--radius-sm);
+  color:var(--text-sub); font-size:14.5px; min-height:44px; transition:.18s; white-space:nowrap; position:relative;
+}
+.nav-item:hover{background:#fff; color:var(--primary-deep);}
+.nav-item.active{background:#fff; color:var(--primary-deep); font-weight:600; box-shadow:var(--shadow);}
+.nav-item.active::before{
+  content:""; position:absolute; left:0; top:50%; transform:translateY(-50%);
+  width:4px; height:22px; border-radius:4px; background:var(--primary);
+}
+.nav-item .nav-ico{width:24px; height:24px; flex-shrink:0; display:flex; align-items:center; justify-content:center;}
+.nav-item .nav-text{white-space:nowrap;}
+
+.sidebar-footer{padding:12px; border-top:1px solid var(--border); display:flex; flex-direction:column; gap:8px;}
+.footer-row{display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-faint); min-height:32px; white-space:nowrap;}
+.sync-dot{width:9px; height:9px; border-radius:50%; flex-shrink:0; background:var(--success);}
+.sync-dot.syncing{background:var(--warning); animation:blink 1s infinite;}
+.sync-dot.offline{background:var(--danger);}
+@keyframes blink{50%{opacity:.35;}}
+.mini-actions{display:flex; gap:6px;}
+.mini-btn{
+  flex:1; min-height:40px; border-radius:10px; background:#fff; border:1px solid var(--border);
+  color:var(--text-sub); font-size:12px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
+  transition:.18s;
+}
+.mini-btn:hover{background:var(--primary-ghost); color:var(--primary-deep); border-color:var(--primary-soft);}
+
+/* 主内容 */
+.main{flex:1; min-width:0; display:flex; flex-direction:column;}
+.topbar{
+  height:60px; flex-shrink:0; background:rgba(247,241,238,.85); backdrop-filter:blur(8px);
+  display:flex; align-items:center; justify-content:space-between; padding:0 24px;
+  border-bottom:1px solid var(--border-soft); position:sticky; top:0; z-index:10;
+}
+.topbar .t-title{font-size:18px; font-weight:700; color:var(--text);}
+.topbar .t-title small{font-weight:400; color:var(--text-faint); font-size:13px; margin-left:8px;}
+.topbar-right{display:flex; align-items:center; gap:10px; font-size:13px; color:var(--text-sub);}
+.content{padding:22px 24px 40px; max-width:1080px; width:100%; margin:0 auto;}
+
+.view{display:none;}
+.view.active{display:block; animation:fadeIn .25s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);}to{opacity:1; transform:none;}}
+
+/* ===== 通用组件 ===== */
+.page-head{display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:18px; flex-wrap:wrap;}
+.page-head h2{font-size:22px; font-weight:700; color:var(--text);}
+.page-head .sub{color:var(--text-sub); font-size:13px; margin-top:2px;}
+.count-pill{font-size:13px; color:var(--primary-deep); background:var(--primary-ghost); padding:4px 12px; border-radius:20px; font-weight:600;}
+
+.card{background:var(--card); border-radius:var(--radius); border:1px solid var(--border-soft); box-shadow:var(--shadow); padding:18px; margin-bottom:18px;}
+.card h3{font-size:15px; font-weight:700; color:var(--primary-deep); margin-bottom:14px; display:flex; align-items:center; gap:8px;}
+.card h3 .h-ico{width:18px; height:18px;}
+
+/* 今日待办 */
+.today-section{display:flex; flex-direction:column; gap:16px;}
+.today-group-title{font-size:13px; font-weight:700; color:var(--text-sub); display:flex; align-items:center; gap:7px; margin:4px 0 10px;}
+.today-group-title .g-dot{width:8px; height:8px; border-radius:50%;}
+.today-item{
+  display:flex; align-items:center; gap:12px; background:#fff; border:1px solid var(--border);
+  border-left-width:4px; border-radius:var(--radius-sm); padding:12px 14px; margin-bottom:10px; flex-wrap:wrap;
+}
+.today-item.overdue{border-left-color:var(--danger); background:var(--danger-soft);}
+.today-item.due{border-left-color:var(--warning); background:var(--warning-soft);}
+.today-item .t-body{flex:1; min-width:180px;}
+.today-item .t-name{font-weight:600; font-size:14.5px;}
+.today-item .t-meta{font-size:12.5px; color:var(--text-sub); margin-top:2px;}
+.today-item .t-meta .tag{display:inline-block; padding:1px 8px; border-radius:20px; font-size:11.5px; margin-right:6px;}
+.tag-red{background:#fff; color:var(--danger);}
+.tag-yellow{background:#fff; color:var(--warning);}
+.tag-gray{background:var(--primary-ghost); color:var(--primary-deep);}
+.tag-blue{background:var(--blue-soft); color:var(--blue);}
+.tag-green{background:var(--success-soft); color:var(--success);}
+.btn{
+  min-height:44px; padding:8px 16px; border-radius:var(--radius-sm); font-size:14px; font-weight:600;
+  display:inline-flex; align-items:center; justify-content:center; gap:6px; transition:.18s; white-space:nowrap;
+}
+.btn-primary{background:var(--primary); color:#fff; box-shadow:0 3px 8px rgba(199,139,152,.28);}
+.btn-primary:hover{background:var(--primary-deep);}
+.btn-ghost{background:#fff; border:1px solid var(--border); color:var(--text-sub);}
+.btn-ghost:hover{border-color:var(--primary); color:var(--primary-deep);}
+.btn-soft{background:var(--primary-ghost); color:var(--primary-deep);}
+.btn-soft:hover{background:var(--primary-soft);}
+.btn-sm{min-height:36px; padding:5px 12px; font-size:13px;}
+.btn-danger{background:#fff; border:1px solid var(--danger-line); color:var(--danger);}
+.btn-danger:hover{background:var(--danger-soft);}
+
+/* 表单 */
+.form-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:12px;}
+.form-grid .full{grid-column:1/-1;}
+.field label{display:block; font-size:13px; color:var(--text-sub); margin-bottom:6px; font-weight:600;}
+.form-actions{display:flex; gap:10px; margin-top:16px;}
+
+/* 列表 */
+.list{}
+.list-empty{text-align:center; color:var(--text-faint); padding:28px 0; font-size:14px;}
+.group-label{font-size:12.5px; font-weight:700; color:var(--text-sub); margin:16px 0 8px; padding-left:4px;}
+.list-item{
+  display:flex; align-items:flex-start; gap:14px; background:#fff; border:1px solid var(--border);
+  border-radius:var(--radius-sm); padding:14px; margin-bottom:10px; transition:.18s;
+}
+.list-item:hover{border-color:var(--primary-soft); box-shadow:var(--shadow);}
+.item-main{flex:1; min-width:0;}
+.item-title{font-weight:600; font-size:15px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+.badge{display:inline-block; padding:2px 9px; border-radius:20px; font-size:11.5px; font-weight:600; line-height:1.5;}
+.b-tier-冲{background:#F0D9DE; color:#B4586B;}
+.b-tier-稳{background:var(--blue-soft); color:var(--blue);}
+.b-tier-保{background:var(--success-soft); color:var(--success);}
+.b-dir{background:var(--primary-ghost); color:var(--primary-deep);}
+.b-status{background:var(--primary-ghost); color:var(--primary-deep);}
+.b-status-done{background:var(--success-soft); color:var(--success);}
+.b-status-doing{background:var(--warning-soft); color:var(--warning);}
+.b-pri-高{background:#F0D9DE; color:#B4586B;}
+.b-pri-中{background:var(--warning-soft); color:var(--warning);}
+.b-pri-低{background:var(--blue-soft); color:var(--blue);}
+.item-meta{font-size:12.5px; color:var(--text-sub); margin-top:4px; display:flex; align-items:center; gap:6px; flex-wrap:wrap;}
+.item-note{font-size:12.5px; color:var(--text-faint); margin-top:4px; font-style:italic;}
+.item-actions{display:flex; gap:6px; flex-shrink:0; align-items:center; flex-wrap:wrap;}
+.day-pill{font-size:12px; font-weight:700; padding:3px 10px; border-radius:20px; white-space:nowrap;}
+.day-overdue{background:var(--danger-soft); color:var(--danger);}
+.day-soon{background:var(--warning-soft); color:var(--warning);}
+.day-normal{background:var(--primary-ghost); color:var(--primary-deep);}
+.day-done{background:var(--success-soft); color:var(--success);}
+
+/* 弹窗 */
+.toast{
+  position:fixed; left:50%; bottom:28px; transform:translateX(-50%) translateY(20px);
+  background:var(--text); color:#fff; padding:11px 20px; border-radius:20px; font-size:14px;
+  opacity:0; pointer-events:none; transition:.28s; z-index:100; box-shadow:0 6px 20px rgba(0,0,0,.18);
+}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+.toast.err{background:var(--danger);}
+
+/* 底部 Tab（移动端） */
+.mobile-tab{
+  display:none; position:fixed; bottom:0; left:0; right:0; background:rgba(255,255,255,.96);
+  backdrop-filter:blur(8px); border-top:1px solid var(--border); z-index:30;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.mobile-tab .tab-inner{display:flex;}
+.mobile-tab .tab-item{
+  flex:1; min-height:56px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+  color:var(--text-faint); font-size:11px;
+}
+.mobile-tab .tab-item.active{color:var(--primary-deep); font-weight:600;}
+.mobile-tab .tab-item .nav-ico{width:24px; height:24px;}
+
+/* ===== 响应式 ===== */
+@media (max-width:768px){
+  .sidebar{display:none;}
+  .mobile-tab{display:block;}
+  .topbar{height:54px; padding:0 16px;}
+  .topbar .t-title{font-size:16px;}
+  .topbar .t-title small{display:none;}
+  .content{padding:16px 14px 100px; max-width:none;}
+  .form-grid{grid-template-columns:1fr;}
+  .list-item{flex-direction:column;}
+  .item-actions{width:100%; justify-content:flex-end;}
+  .page-head h2{font-size:19px;}
+  .card{padding:15px;}
+}
+</style>
+</head>
+<body data-page-node-id="uy0pk53WAw77pOryL2RzIZ">
+<div data-page-node-id="WN278QD1dXRp4pNFakkZlx" class="app">
+  <!--pnid:tKViaYeFzoqXRqGkcJXMsu--><!-- 侧边栏 -->
+  <aside data-page-node-id="9v6MPvXwG49AL0ptHCJsST" class="sidebar" id="sidebar">
+    <div data-page-node-id="zwWi5uzVDaUm2fiXp2R4el" class="sidebar-header">
+      <div data-page-node-id="vo9bFfUTNyITNjigr4FEjG" class="logo-badge">
+        <svg data-page-node-id="LkBEANX71Y2PFir0VXkT4C" fill="none" height="22" viewBox="0 0 24 24" width="22">
+          <path data-page-node-id="BnILAP4kCk6I3UnrgVUaIz" d="M12 3 L14.5 8.5 L20.5 9 L16 13 L17.5 19 L12 15.8 L6.5 19 L8 13 L3.5 9 L9.5 8.5 Z" fill="#fff" stroke="#fff" stroke-linejoin="round" stroke-width="1"/>
+        </svg>
+      </div>
+      <div data-page-node-id="Eaz17BTUakzp10eXu8ayAB" class="site-title"><!--pnid:bULzyNo2M9nIwN0TPhMRhV-->保研工作台</div>
+    </div>
+    <div data-page-node-id="fDK3VNI3Bd6cYHL1COIhOQ" class="collapse-wrap">
+      <button data-page-node-id="KU1uVsVQRs0XLebygIyvJQ" class="collapse-btn" id="collapseBtn" title="收起/展开">
+        <svg data-page-node-id="U34UiYIzOyJqcSN72PKKpN" fill="none" height="18" viewBox="0 0 24 24" width="18"><path data-page-node-id="gZam0jLquEbESu6euux8PW" d="M15 6 L9 12 L15 18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+        <span data-page-node-id="h4kn8VxUGENyK2jiZb3Muj" class="c-text"><!--pnid:x7EjuMTUwUbOV1pmNT7o1j-->收起导航</span>
+      </button>
+    </div>
+    <nav data-page-node-id="Q3A9R2VWfWEH2AESmrOkJg" class="nav" id="nav">
+      <a data-page-node-id="9xF0u6YM1eSWzeWPPzXS9S" class="nav-item active" data-view="today" href="#">
+        <span data-page-node-id="seOLcZGWrloPGrEryMZIBp" class="nav-ico"><svg data-page-node-id="VBAKjBttjINOPF14aJBU87" fill="none" height="24" viewBox="0 0 24 24" width="24"><rect data-page-node-id="M5JXXP5uRIT3ZMmh7B5mj4" fill="#EBD4DA" height="15" rx="3" stroke="#A96F7E" stroke-width="1.5" width="17" x="3.5" y="5"/><line data-page-node-id="2fVm0zKwOeydiT971XYHWw" stroke="#A96F7E" stroke-width="1.5" x1="3.5" x2="20.5" y1="9.5" y2="9.5"/><line data-page-node-id="iOXJRdASwYb8PcKtRP1DpX" stroke="#A96F7E" stroke-linecap="round" stroke-width="1.5" x1="8" x2="8" y1="3" y2="7"/><line data-page-node-id="3Ybpsx1PzhfKjWejtimAG7" stroke="#A96F7E" stroke-linecap="round" stroke-width="1.5" x1="16" x2="16" y1="3" y2="7"/><path data-page-node-id="IXMzkGHakgAtjUs5fi6dVD" d="M12 13.2 l1.1 2.2 2.4 .35 -1.75 1.7 .4 2.4 -2.15 -1.1 -2.15 1.1 .4 -2.4 -1.75 -1.7 2.4 -.35z" fill="#C78B98"/></svg></span>
+        <span data-page-node-id="7Rx8EWnZVAz2TPh23FBiv3" class="nav-text"><!--pnid:RyHGVKAa92r69TG1rgIhyV-->今日待办</span>
+      </a>
+      <a data-page-node-id="TWVSUYOWTdmGvqNy8xb19r" class="nav-item" data-view="schools" href="#">
+        <span data-page-node-id="vKDdSJXsUzI2oiuvdLe3Kx" class="nav-ico"><svg data-page-node-id="gIU11cDGqcX5NaQufLAM68" fill="none" height="24" viewBox="0 0 24 24" width="24"><path data-page-node-id="4tmWOmRXgM5u0DI56y0hUU" d="M12 4.5 L21.5 9 L12 13.5 L2.5 9 Z" fill="#DCE3E8" stroke="#7A8B98" stroke-linejoin="round" stroke-width="1.5"/><path data-page-node-id="Pg1J0dMS6YLKRL7gZmf1J7" d="M6.5 11.3 V15.5 C6.5 16.9 9 18.5 12 18.5 C15 18.5 17.5 16.9 17.5 15.5 V11.3" fill="none" stroke="#7A8B98" stroke-linecap="round" stroke-width="1.5"/><line data-page-node-id="wI9RYmporaxmYDfVPnCeqc" stroke="#7A8B98" stroke-linecap="round" stroke-width="1.5" x1="21.5" x2="21.5" y1="9" y2="13.5"/></svg></span>
+        <span data-page-node-id="ZtJ9BMwrHAm9O8uW537gKJ" class="nav-text"><!--pnid:pWfEdE9T45KnwKBFi8klYr-->目标院校</span>
+      </a>
+      <a data-page-node-id="TStXWGMsZZM87wIIMJP9sq" class="nav-item" data-view="nodes" href="#">
+        <span data-page-node-id="6nJvts0jy5fHW7DuS6IPrN" class="nav-ico"><svg data-page-node-id="YwKkJ5ohFvU78Z9y8ErTMw" fill="none" height="24" viewBox="0 0 24 24" width="24"><circle data-page-node-id="5d6dHjggcYbAeqzzLRdnE6" cx="12" cy="13.5" fill="#F2E5D3" r="7.5" stroke="#B98A5A" stroke-width="1.5"/><path data-page-node-id="sfhxq8ihvcCNmmK6zHOETs" d="M12 9.5 V13.5 L14.8 15.2" fill="none" stroke="#B98A5A" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><line data-page-node-id="9MxczidDhKw73gUBIaRHif" stroke="#B98A5A" stroke-linecap="round" stroke-width="1.5" x1="12" x2="12" y1="2.5" y2="6"/></svg></span>
+        <span data-page-node-id="FL6nu2mbVkqymntEmgN6s6" class="nav-text"><!--pnid:y1rhxNPVq9T1rVKwi1Z5yb-->关键节点</span>
+      </a>
+      <a data-page-node-id="gSQo3vucbyMXVLlGs9RuZF" class="nav-item" data-view="materials" href="#">
+        <span data-page-node-id="qRbC549pjt2wuYkkV4O4Ct" class="nav-ico"><svg data-page-node-id="5PogDWqQWftjiwrK6G0wVu" fill="none" height="24" viewBox="0 0 24 24" width="24"><path data-page-node-id="IOKhz0SjM8OyTqH7RJgNK9" d="M7 3.5 H14 L17.5 7 V19.5 A1 1 0 0 1 16.5 20.5 H7 A1 1 0 0 1 6 19.5 V4.5 A1 1 0 0 1 7 3.5 Z" fill="#E3EADF" stroke="#7E9A77" stroke-linejoin="round" stroke-width="1.5"/><path data-page-node-id="NPBEonW5nZueL2K6jPM2zZ" d="M14 3.5 V7 H17.5" fill="none" stroke="#7E9A77" stroke-linejoin="round" stroke-width="1.5"/><path data-page-node-id="NUi8gv3hXPej3v4nnC8yMf" d="M9 12.5 L11 14.5 L15 10.5" fill="none" stroke="#7E9A77" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg></span>
+        <span data-page-node-id="kT9ymvRaaFM0gv8LrW7f9i" class="nav-text"><!--pnid:70Ds1DhTa3UrvWpIdCZ1Hv-->材料清单</span>
+      </a>
+    </nav>
+    <div data-page-node-id="6gHn9DALxC9O8IMkK0dgBC" class="sidebar-footer">
+      <div data-page-node-id="Vl6wW2W78epBbsdQVVvOYY" class="footer-row"><span data-page-node-id="BJfA5Up47g1VjG1GKhOKjq" class="sync-dot" id="syncDot"></span><span data-page-node-id="EueN9fUQ5yRKwyvmdhrtTY" id="syncText"><!--pnid:ocBtgI9vTnghRx12frRTuA-->已同步</span></div>
+      <div data-page-node-id="By4sUlXlZg383RDNlavVyj" class="mini-actions">
+        <button data-page-node-id="5NQTQ82T0mfW8NsO6nUmtH" class="mini-btn" id="exportBtn" title="导出JSON备份">
+          <svg data-page-node-id="EOnorAwi3rl4cD0PLwtQaX" fill="none" height="16" viewBox="0 0 24 24" width="16"><path data-page-node-id="fMnvqOj59Q9S8kTKxZ50Fe" d="M12 3 V15" stroke="currentColor" stroke-linecap="round" stroke-width="2"/><path data-page-node-id="QU2TScRF7crlTqCc8O2JOA" d="M7 10 L12 15 L17 10" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/><path data-page-node-id="rUN9o1kFxCqD1Zzb2nIfOf" d="M4 18 V20 A1 1 0 0 0 5 21 H19 A1 1 0 0 0 20 20 V18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg><!--pnid:ELQwSg6xc7zObNuexwwIrG-->
+          备份
+        </button>
+        <button data-page-node-id="CenssVPGeqqdP10us6waX3" class="mini-btn" id="importBtn" title="导入恢复">
+          <svg data-page-node-id="nJtB1nOTt6AVkRvr8yZY9i" fill="none" height="16" viewBox="0 0 24 24" width="16"><path data-page-node-id="tRzhxykSl5NnjVYrYf58bd" d="M12 15 V3" stroke="currentColor" stroke-linecap="round" stroke-width="2"/><path data-page-node-id="fsO8B6832mBjPtm4VXlmru" d="M7 8 L12 3 L17 8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/><path data-page-node-id="Ldj3GSFrBzUPmwxuzzDNfo" d="M4 18 V20 A1 1 0 0 0 5 21 H19 A1 1 0 0 0 20 20 V18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg><!--pnid:VXpXbuxDU1ebvnJ4p02U9i-->
+          恢复
+        </button>
+        <button data-page-node-id="FULh16Vznyq6bMOEpQE67T" class="mini-btn" id="clearExampleBtn" title="清空示例数据">
+          <svg data-page-node-id="A8ZCKJx4l7X5mMToyOgQhU" fill="none" height="16" viewBox="0 0 24 24" width="16"><path data-page-node-id="M49zUQZEouqgbtTQM42Byz" d="M4 7 H20" stroke="currentColor" stroke-linecap="round" stroke-width="2"/><path data-page-node-id="mrqO2rTiZIV1OPKIbLBJMi" d="M9 7 V5 A1 1 0 0 1 10 4 H14 A1 1 0 0 1 15 5 V7" stroke="currentColor" stroke-width="1.6"/><path data-page-node-id="BP0w74mk4I7rwYKa5PHtXi" d="M6 7 L7 20 A1 1 0 0 0 8 21 H16 A1 1 0 0 0 17 20 L18 7" stroke="currentColor" stroke-linecap="round" stroke-width="1.6"/><path data-page-node-id="F8hXDCttZlBMhGdftaSshU" d="M10 11 V17 M14 11 V17" stroke="currentColor" stroke-linecap="round" stroke-width="1.6"/></svg><!--pnid:QBUMMmYbD27gLe4oUsc4UP-->
+          清示例
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!--pnid:EvLYnBiy2bVCuMzVPpiiO2--><!-- 主内容 -->
+  <main data-page-node-id="MzgnOD96YnkrRHiMqbHYOU" class="main">
+    <header data-page-node-id="4OTE9JNpll7uAp0FffHjQ1" class="topbar">
+      <div data-page-node-id="nVxuvqcSMNEwUOSNcB3PmA" class="t-title"><!--pnid:Z4VIqlyrGqB1JVDSH9mFDW-->保研工作台 <small data-page-node-id="eV7IHb95Zj1NsOplAvsKID"><!--pnid:NEUsiSL3p9I4Uh9mFOcgPq-->稳稳拿 offer</small></div>
+      <div data-page-node-id="PMjRRg5DkYkaSHScb8JBuq" class="topbar-right">
+        <span data-page-node-id="vD6IBPqUPa4pCynh5I9UzG" class="sync-dot" id="syncDotTop"></span>
+        <span data-page-node-id="tsjEuLHSrlU2N0gl36KA8q" id="syncTextTop"><!--pnid:JF3KCah7pr8DtZXSlt9Tml-->已同步</span>
+      </div>
+    </header>
+    <div data-page-node-id="cDqivwPFikCt74UxCVVI2Y" class="content">
+      <!--pnid:t0o7CPImdfmY2IN2Do9CtP--><!-- 今日待办 -->
+      <section data-page-node-id="lp0nIMsoTWWLhXtSWWnHVJ" class="view active" id="view-today">
+        <div data-page-node-id="kXEvzYUeiORTHTSayUuZtL" class="page-head">
+          <div data-page-node-id="anS19oygzkE4gbeOLa67Y1">
+            <h2 data-page-node-id="buXgwwiE3A1b2GDGvdcJQ4"><!--pnid:yITsdkMAywrIczt50FIVf9-->今天要处理</h2>
+            <div data-page-node-id="KkUEKUUaCya0P4kv7iK73A" class="sub"><!--pnid:pEDfDMJoGzAHtXHs0oIIjS-->逾期未完成、今天到期、快截止的事项都在这里</div>
+          </div>
+          <span data-page-node-id="QiZVAnz9GKUGPpLcT9R8L6" class="count-pill" data-sp-bindable="database" data-sp-database-id="dsHZFDFsr6veCueEqrPSuI" id="todayCount"><!--pnid:ZJkLZGWk13p53OxNFm4GJS-->0 项</span>
+        </div>
+        <div data-page-node-id="DK62UIvTPBrK32oNB2hLL9" class="today-section" id="todayList"></div>
+      </section>
+
+      <!--pnid:zcoVw3aCm8VJzBW4rVpmOh--><!-- 目标院校 -->
+      <section data-page-node-id="Gg4LHSMXpyK8rDLtM4lPKo" class="view" id="view-schools">
+        <div data-page-node-id="O8NZ5I7bqUCWR4wSelx68k" class="page-head">
+          <div data-page-node-id="48RBm9OxJ6JT83mzBx0Nna">
+            <h2 data-page-node-id="osA2AGkIUwL3P2qgMMSijZ"><!--pnid:A34QLN7dDLU2w1Vi3fm39B-->目标院校</h2>
+            <div data-page-node-id="aaB9BtEAgAsImxCHJiwp52" class="sub"><!--pnid:YTzi2teRKkX9K1z0yvf0Ud-->985 + 江南大学，食品本专业与生物关联方向</div>
+          </div>
+          <span data-page-node-id="OmWjnGJd5PjofxmepUrtJn" class="count-pill" data-sp-bindable="database" data-sp-database-id="F72CTkFxd1jrepaIiIX6UL" id="schoolCount"><!--pnid:OJSwZ29uEBSptanQ04TW3d-->0 所</span>
+        </div>
+        <div data-page-node-id="bAC4CBJqsL2u45d1PWFlAc" class="card">
+          <h3 data-page-node-id="YS1Y9WheQPyoONVE4mqaMy"><span data-page-node-id="hWWOvJxkvVe7oRMYuwTTtP" class="h-ico"><svg data-page-node-id="UaxVEqS0HbKPyhiz8fTyEQ" fill="none" height="18" viewBox="0 0 24 24" width="18"><path data-page-node-id="18gzgJAxDoKt57hSW1x8pG" d="M12 5 V19" stroke="#A96F7E" stroke-linecap="round" stroke-width="2"/><path data-page-node-id="CTHTSnH0plQKeyQPRLbaWJ" d="M5 12 H19" stroke="#A96F7E" stroke-linecap="round" stroke-width="2"/></svg></span><!--pnid:fyKZScIubeS2cZRmFDlajk-->添加院校</h3>
+          <form data-page-node-id="WQchE2fy9f7brTqzJhTem1" id="schoolForm">
+            <div data-page-node-id="Yfo2HnefDCeATjVVNBqLXT" class="form-grid">
+              <div data-page-node-id="Nm5NG8gafaDD9pEKXpFqqI" class="field"><label data-page-node-id="NsMg6RsWXvnXBs5mWPIiEc"><!--pnid:jBn3saqgIA4TWHsZXr9nKu-->学校名称</label><input data-page-node-id="LvJjz7Ab9rQ4FXuG0QGlBh" name="学校" placeholder="如：中国农业大学" required type="text"></div>
+              <div data-page-node-id="oR0pLRXxkcJ5ycNOc3s1zK" class="field"><label data-page-node-id="fVZ7kX5do82RgP5mpZYqlc"><!--pnid:K6cu1uD0RRaElUQSasGdUR-->城市</label><input data-page-node-id="ozJuUljqJXfsuAsSTUaBwJ" name="城市" placeholder="如：北京" type="text"></div>
+              <div data-page-node-id="XGYMPZ0foz6Lz80PC3KEsT" class="field"><label data-page-node-id="IyKQoaCIDClUFDghIcQ8lW"><!--pnid:HhbeAySx7qsaa7xMJikUrP-->梯队</label><select data-page-node-id="m8IO0pzE7BVlnpIw1WFGGB" name="梯队"><option data-page-node-id="oaUl8zkNskfvmxQWTxLE17" value><!--pnid:gZlE1vhHq41K6MVDH6z1w6-->请选择</option></select></div>
+              <div data-page-node-id="s6GmccRY854crexBX1ZnEB" class="field"><label data-page-node-id="GHJFPNCBPZPOKX9cqOOkWA"><!--pnid:BeTHMMpizmWqomEmabQHgU-->方向</label><select data-page-node-id="xzlxpk3H52j9CiOMsbsIRa" name="方向"><option data-page-node-id="LLPQK5WIEAVtejYQAQRLdg" value><!--pnid:IWN8uRr4C5Nd6tzD2O3Sh0-->请选择</option></select></div>
+              <div data-page-node-id="FRKKrTw7jwukG4RC3KQPsu" class="field"><label data-page-node-id="2g4R7b8AvBxC2GTXB3JYTJ"><!--pnid:zuKkkSBpI5DPFW0ZCU2OKZ-->报名状态</label><select data-page-node-id="hGQYlHtTMTGGeuf6Vcmv4i" name="报名状态"><option data-page-node-id="uK4QNWHxp23tfyhNsLUlp3" value><!--pnid:iAmG1E5k6sjz6ZlFP3fFk9-->请选择</option></select></div>
+              <div data-page-node-id="OTAvzWJCsN9AW0vEkWaKFs" class="field"><label data-page-node-id="1fzQwmmOS68UuJ7cdBUTC8"><!--pnid:gVlhfZCQ4VChf2baQcL1Hu-->官网链接</label><input data-page-node-id="sFp16Rt4f0Zv7akXLKN4z0" name="官网" placeholder="https://" type="url"></div>
+              <div data-page-node-id="StEk49PHuB0KJXGW5ERi7F" class="field full"><label data-page-node-id="FkEk6zHy64UQ99HqupcVgW"><!--pnid:Z0Ch3QluMcokrThwqcbrsU-->备注</label><input data-page-node-id="nqugj7fLY9F95bXFxESRG0" name="备注" placeholder="导师、材料要求、注意事项等" type="text"></div>
+            </div>
+            <div data-page-node-id="a2pwQCFV8XWbWuBQPo9X9D" class="form-actions">
+              <button data-page-node-id="DsIxOvwKpSUK5ClrN2O5do" class="btn btn-primary" type="submit"><!--pnid:4WmCTn9FFHpP0sFo2hx1nZ-->添加院校</button>
+            </div>
+          </form>
+        </div>
+        <div data-page-node-id="1a8caRAHzRFjwBaZn6hLq4" class="list" id="schoolList"></div>
+      </section>
+
+      <!--pnid:ORTtbLPzfjiCR0mRVmaXLC--><!-- 关键节点 -->
+      <section data-page-node-id="FGiOs02CzZuS8ttsDcDNWu" class="view" id="view-nodes">
+        <div data-page-node-id="rsn95mqDJGzZpdUaL3stKq" class="page-head">
+          <div data-page-node-id="VKfAq5piTPZ6sLPDlJJMYx">
+            <h2 data-page-node-id="lG9FleaPGfjYUvcng6c7UG"><!--pnid:CtwASlo7B3fFRVwUHyP6Xb-->关键节点</h2>
+            <div data-page-node-id="W6uUhBkxrSQQh7I3yUghXM" class="sub"><!--pnid:3HOA3yso80YPohhv12lLEJ-->六级、夏令营、预推免……一个都别错过</div>
+          </div>
+          <span data-page-node-id="YfTw45ZGDDp0gAeRW0cwF5" class="count-pill" data-sp-bindable="database" data-sp-database-id="dsHZFDFsr6veCueEqrPSuI" id="nodeCount"><!--pnid:R6oHBgIsvCUS7isuJtFgG9-->0 个</span>
+        </div>
+        <div data-page-node-id="5w5MCqe2fNBSj827RE6UbC" class="card">
+          <h3 data-page-node-id="dtzIuNQ0ci527gof2Znnqk"><span data-page-node-id="y2NGu9eTMt3HhYyI8NqQYa" class="h-ico"><svg data-page-node-id="IUuqBcUuBGg4miHyINtpxm" fill="none" height="18" viewBox="0 0 24 24" width="18"><path data-page-node-id="3VnFgBcgpKl8JemTostKvI" d="M12 5 V19" stroke="#A96F7E" stroke-linecap="round" stroke-width="2"/><path data-page-node-id="hbtynYg0eLkTzuxp5496iy" d="M5 12 H19" stroke="#A96F7E" stroke-linecap="round" stroke-width="2"/></svg></span><!--pnid:7KN0Z3gKJXblLXgIoWm0qQ-->添加节点</h3>
+          <form data-page-node-id="B5avCUSLpbMvHf7njU8V68" id="nodeForm">
+            <div data-page-node-id="hBxBICDQx1gm23PwQJwSKE" class="form-grid">
+              <div data-page-node-id="1zaJpNfXz89Atsi24Nwlpj" class="field full"><label data-page-node-id="mVkI8HGW7CYmmGpomZ4vlr"><!--pnid:dI6SlLAT3D3HDMF2v1F4bB-->事件</label><input data-page-node-id="3THOE7MClJi2qS7NGGQgFD" name="事件" placeholder="如：六级考试（12月场）" required type="text"></div>
+              <div data-page-node-id="vQMmugi6zNC62IBXwanW3z" class="field"><label data-page-node-id="k650iPG69wmrRFpEknxEDG"><!--pnid:7LUR6EcfLodrePpByzOEjy-->日期</label><input data-page-node-id="7x1JXGoRJhrLzckEoQJCuZ" name="日期" required type="date"></div>
+              <div data-page-node-id="EJPWmbJN3cZIeTMuPi0lcZ" class="field"><label data-page-node-id="j00rtI58OKETQaLgWenPdP"><!--pnid:pwPKT1TypfTmmuxrGrGIMK-->优先级</label><select data-page-node-id="rmeuqodp3b2gVtVNgaVXX1" name="优先级"><option data-page-node-id="XZSQi7jQAF8mlXjUVv1lTg" value><!--pnid:pnXwL0Hwo5abKn9zt4efef-->请选择</option></select></div>
+              <div data-page-node-id="9VONdz4h55Y5tqSV9YHQJQ" class="field full"><label data-page-node-id="dDXGzWrKkXWHvrUhlBesh2"><!--pnid:rpnC3QBcQWnyDSYUz39XUQ-->备注</label><input data-page-node-id="lcQE65GCzz1z0KM7RVqm0f" name="备注" placeholder="可选" type="text"></div>
+            </div>
+            <div data-page-node-id="4ASosPLgyeLf4LlZxyIf4J" class="form-actions">
+              <button data-page-node-id="ZxZiG1ZkE5BThlT45J7Mgg" class="btn btn-primary" type="submit"><!--pnid:EBAtysISFHGSK0L9ih6T1q-->添加节点</button>
+            </div>
+          </form>
+        </div>
+        <div data-page-node-id="zgnyerEwV1B1FrQ4ujUqaY" class="list" id="nodeList"></div>
+      </section>
+
+      <!--pnid:Oip50cnmTtxmTqyPJjN4wR--><!-- 材料清单 -->
+      <section data-page-node-id="Jd7SCN7LRrPpO2J11KjTPV" class="view" id="view-materials">
+        <div data-page-node-id="wJhxooVIeOAFjMJEX3pmDD" class="page-head">
+          <div data-page-node-id="Jj1CFKn9TK6dY8ZFUghTbl">
+            <h2 data-page-node-id="5zqTN9lpfPp0nAQWXVhIBB"><!--pnid:N0jsj5h0YqoZLghHYQqGji-->材料清单</h2>
+            <div data-page-node-id="p1gk9PXt5jRVUPdMdfD43r" class="sub"><!--pnid:zXazxFHy4ngMOg8PnoxvXN-->简历、个人陈述、成绩证明……逐项备齐</div>
+          </div>
+          <span data-page-node-id="Q1mHkqNynrBuhkwQOLp0Ym" class="count-pill" data-sp-bindable="database" data-sp-database-id="OybQF00KiIk4Q9VHZpyhns" id="materialCount"><!--pnid:DSxAEEncNN1brUWhNSEC6u-->0 项</span>
+        </div>
+        <div data-page-node-id="Q4WDh1EJ6ISWE4hycSycyB" class="card">
+          <h3 data-page-node-id="HkQtHSAPfLFqAtdqdTVmgl"><span data-page-node-id="sTtfosP2cnDKuY0MPx8Pcd" class="h-ico"><svg data-page-node-id="hMBzLXmKvyYTTgXXRVILyq" fill="none" height="18" viewBox="0 0 24 24" width="18"><path data-page-node-id="6zdrK29ktfns03c2jYVyQQ" d="M12 5 V19" stroke="#A96F7E" stroke-linecap="round" stroke-width="2"/><path data-page-node-id="Rm9fvPBNkh3Tgx1XIWPmV0" d="M5 12 H19" stroke="#A96F7E" stroke-linecap="round" stroke-width="2"/></svg></span><!--pnid:OawOckaPLwqsW7zTldiNnq-->添加材料</h3>
+          <form data-page-node-id="HwLQY34YKGJ1j06MrkuLae" id="materialForm">
+            <div data-page-node-id="NFRadnyOeuZW0maDhK0kfY" class="form-grid">
+              <div data-page-node-id="CX3XnRHL4Jf2FZPQamrOtq" class="field"><label data-page-node-id="7VNfUaYUBy28LqrsgxJt1v"><!--pnid:dzhbIUziLkeWKLRpoKhgah-->材料名称</label><input data-page-node-id="zlse0F6jfHDe8IbA8wAXxA" name="材料" placeholder="如：个人简历" required type="text"></div>
+              <div data-page-node-id="kxANvIzZqvauPnJiMgUvJr" class="field"><label data-page-node-id="45vqNsOTKo6kBdsti0t7oy"><!--pnid:YqHl1M0mSQmJTzDcr4OHEy-->类型</label><select data-page-node-id="SPAvA5qtP8C5hGiZJMXF42" name="类型"><option data-page-node-id="iUi6sh1G6GWB5Mtxeg0zl1" value><!--pnid:sSQJU7bp4oP3B85i6pB9fC-->请选择</option></select></div>
+              <div data-page-node-id="Jna93XUdOpyXpp1wYeXdaq" class="field full"><label data-page-node-id="XpQqBHMiKw3o4B4s6J0GRA"><!--pnid:RXfO4Zm4wVwFpVzkTj4235-->备注</label><input data-page-node-id="5N62Wwad562xGoxcfgtRoR" name="备注" placeholder="可选" type="text"></div>
+            </div>
+            <div data-page-node-id="KV5YliU9N46zoRmXBz3rfA" class="form-actions">
+              <button data-page-node-id="UfKBs7S3KoAVljTqAoO5sr" class="btn btn-primary" type="submit"><!--pnid:bGd9hpVHhmoumsNUmid9Lx-->添加材料</button>
+            </div>
+          </form>
+        </div>
+        <div data-page-node-id="kRsPuG0X4gXt8UrzHII4Mm" class="list" id="materialList"></div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!--pnid:fBkWh4Xrotfs2wU60tuqdS--><!-- 移动端底部 Tab -->
+<nav data-page-node-id="K8y81Y56xQmkHK7ZmGcBeK" class="mobile-tab" id="mobileTab">
+  <div data-page-node-id="dGyYoaPzxU1wO8OW0T9hBt" class="tab-inner">
+    <a data-page-node-id="AOpp1gjq8dL2ASq38QIPIp" class="tab-item active" data-view="today" href="#">
+      <span data-page-node-id="BbPYr0utOldtd2BT0yczbT" class="nav-ico"><svg data-page-node-id="58TxMlMjPSAdBNDUO9i2ba" fill="none" height="24" viewBox="0 0 24 24" width="24"><rect data-page-node-id="OKHoGRUNvkNyEWEHecHjUG" fill="none" height="15" rx="3" stroke="currentColor" stroke-width="1.6" width="17" x="3.5" y="5"/><line data-page-node-id="OAUbzCjcTWnnP6yVHTDqTa" stroke="currentColor" stroke-width="1.6" x1="3.5" x2="20.5" y1="9.5" y2="9.5"/><path data-page-node-id="nt7Jrs1kSx4b2GsKgrWL5T" d="M8 3 V7 M16 3 V7" stroke="currentColor" stroke-linecap="round" stroke-width="1.6"/></svg></span>
+      <span data-page-node-id="kouZ0hibC0HtWkkIsHUuhx"><!--pnid:NeSLk07cdvXVNkh0z1RdcH-->今日待办</span>
+    </a>
+    <a data-page-node-id="3Qf5Lt8IelT7xUyay5mjkk" class="tab-item" data-view="schools" href="#">
+      <span data-page-node-id="t27IGxGvRf0MKYSOsgPJ59" class="nav-ico"><svg data-page-node-id="ACZMR5hXL4dMTcOmSSMhjm" fill="none" height="24" viewBox="0 0 24 24" width="24"><path data-page-node-id="blgVfe9VQZkX45lsicZbaA" d="M12 4.5 L21.5 9 L12 13.5 L2.5 9 Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.6"/><path data-page-node-id="jBeL2g2eerR0OsWi70wcR1" d="M6.5 11.3 V15.5 C6.5 16.9 9 18.5 12 18.5 C15 18.5 17.5 16.9 17.5 15.5 V11.3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.6"/></svg></span>
+      <span data-page-node-id="5KBNjYL1xwM7GWo8abZgis"><!--pnid:hQdMIBePwwpTfwI40yxS6l-->目标院校</span>
+    </a>
+    <a data-page-node-id="qHaEBVCVivGhY8e8AlEoQI" class="tab-item" data-view="nodes" href="#">
+      <span data-page-node-id="y8RhpV2wuxi1vGEhXPIEEX" class="nav-ico"><svg data-page-node-id="yxPEY33NHdwoOFgBe8dKjh" fill="none" height="24" viewBox="0 0 24 24" width="24"><circle data-page-node-id="BZynFLXuH5Bl78TuXEKdeg" cx="12" cy="13.5" fill="none" r="7.5" stroke="currentColor" stroke-width="1.6"/><path data-page-node-id="vUmve1MEwCrM1UOLhyjYDH" d="M12 9.5 V13.5 L14.8 15.2" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/></svg></span>
+      <span data-page-node-id="VlRHTZbBGBXCnTnPlVi6zf"><!--pnid:EmaHnhQG6ZyMByC64258hP-->关键节点</span>
+    </a>
+    <a data-page-node-id="nxSrAyk5GEDCDNG6WzZ5Wo" class="tab-item" data-view="materials" href="#">
+      <span data-page-node-id="AJVS646nOqgcQLqM78N7aO" class="nav-ico"><svg data-page-node-id="UleGFt2z0WtyvKTrqAc8zQ" fill="none" height="24" viewBox="0 0 24 24" width="24"><path data-page-node-id="uinf3HUu6IEJdYy87gQ2lS" d="M7 3.5 H14 L17.5 7 V19.5 A1 1 0 0 1 16.5 20.5 H7 A1 1 0 0 1 6 19.5 V4.5 A1 1 0 0 1 7 3.5 Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.6"/><path data-page-node-id="Z9nEBWKqPmFkMoDVBB8REc" d="M14 3.5 V7 H17.5" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.6"/></svg></span>
+      <span data-page-node-id="vtVUJMIdW60rfrbGKNEf2s"><!--pnid:nXbQstK87ColM05PJUDcTh-->材料清单</span>
+    </a>
+  </div>
+</nav>
+
+<input data-page-node-id="mI4XIfY14QiDvYm52DM35T" accept="application/json" id="importFile" type="file" style="display:none">
+<div data-page-node-id="2cyDpJtObExsI9HS8Fewde" class="toast" id="toast"></div>
+
+<script data-page-node-id="mefA8D8ykQVNhRXyMmBCFC" data-pnid-children="xZFgZjTtSC2f7fcPY9dlu4">
+(function(){
+  'use strict';
+  var db = (window.__SMART_PAGE__ && window.__SMART_PAGE__.database) || null;
+
+  // ===== 常量 =====
+  var DB_SCHOOL   = 'F72CTkFxd1jrepaIiIX6UL';
+  var DB_NODE     = 'dsHZFDFsr6veCueEqrPSuI';
+  var DB_MATERIAL = 'OybQF00KiIk4Q9VHZpyhns';
+
+  var EXAMPLE_IDS = {
+    school:   ['4Te7CqGM6WUDC39gQE76Nb','6wnN91hlfbn4lKMSeJHYr0','HvKHCzMsNenQitug0Bb0kb','xWuQiG7G392P3IQhYNTjOG'],
+    node:     ['4Y8MEia68mYxiOOXYeRJ2f','pqgWtrn9BEUh4dzvXT5NJf','ncqfUQqLisAUoWm3z93xMX','3dqDN3NgtwSvKJmM08H5qG'],
+    material: ['ZMuk8njAicxmEXdl8X2tvu','z0ECjybwZCnchHx29j4h5D','kYR83gC96eUqRdp8WSkcw8','r9CK2P7U0vJrQrdNFJPL5N']
+  };
+
+  var TIER_ORDER = ['冲','稳','保'];
+  var MAT_ORDER = ['通用','文书','证明','其他'];
+
+  var SCHEMA_OPTIONS = {};  // 字段名 -> [{text,id}]
+  var state = { schools:[], nodes:[], materials:[] };
+  var todayStr = localDateStr(new Date());
+
+  // ===== 工具 =====
+  function $(sel){ return document.querySelector(sel); }
+  function $all(sel){ return Array.prototype.slice.call(document.querySelectorAll(sel)); }
+  function esc(s){
+    if (s === null || s === undefined) return '';
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function localDateStr(d){
+    var m = ('0' + (d.getMonth()+1)).slice(-2);
+    var day = ('0' + d.getDate()).slice(-2);
+    return d.getFullYear() + '-' + m + '-' + day;
+  }
+  function dateOnly(iso){
+    if (!iso) return '';
+    return String(iso).slice(0,10);
+  }
+  function fmtDateCn(iso){
+    var d = dateOnly(iso);
+    if (!d) return '';
+    var p = d.split('-');
+    return (parseInt(p[1],10)) + '月' + (parseInt(p[2],10)) + '日';
+  }
+  function daysUntil(iso){
+    var d = dateOnly(iso);
+    if (!d) return null;
+    var a = new Date(d + 'T00:00:00');
+    var b = new Date(todayStr + 'T00:00:00');
+    var diff = a - b;
+    return Math.round(diff / 86400000);
+  }
+  function optId(field, text){
+    var arr = SCHEMA_OPTIONS[field];
+    if (arr) {
+      for (var i=0;i<arr.length;i++){ if (arr[i].text === text) return arr[i].id; }
+    }
+    return text; // fallback：server 也接受文本
+  }
+  function setBind(el, dbId){
+    el.setAttribute('data-sp-bindable','database');
+    el.setAttribute('data-sp-database-id', dbId);
+  }
+  function toast(msg, isErr){
+    var t = $('#toast');
+    t.textContent = msg;
+    t.className = 'toast show' + (isErr ? ' err' : '');
+    clearTimeout(t._tm);
+    t._tm = setTimeout(function(){ t.className = 'toast'; }, 2400);
+  }
+  function setSync(mode){
+    // mode: 'ok' | 'syncing' | 'offline'
+    var dot = $('#syncDot'), dot2 = $('#syncDotTop'), txt = $('#syncText'), txt2 = $('#syncTextTop');
+    var label = mode==='ok' ? '已同步' : (mode==='syncing' ? '同步中' : '离线模式');
+    [dot,dot2].forEach(function(d){ if(d){ d.className = 'sync-dot ' + (mode==='ok'?'':(mode==='syncing'?'syncing':'offline')); } });
+    [txt,txt2].forEach(function(t){ if(t) t.textContent = label; });
+  }
+
+  // ===== 数据层 =====
+  function loadSchools(cursor, acc, guard){
+    acc = acc || []; guard = guard || 0;
+    if (guard > 100) return Promise.resolve(acc);
+    return db.query({ databaseId: 'F72CTkFxd1jrepaIiIX6UL', pageSize: 200, startCursor: cursor })
+      .then(function(r){
+        acc = acc.concat(r.results || []);
+        var next = r.nextCursor;
+        if (r.hasMore && next && next !== cursor && (r.results || []).length) return loadSchools(next, acc, guard + 1);
+        return acc;
+      })
+      .catch(function(err){ console.error('[database] 院校加载失败:', err); return acc; });
+  }
+  function loadNodes(cursor, acc, guard){
+    acc = acc || []; guard = guard || 0;
+    if (guard > 100) return Promise.resolve(acc);
+    return db.query({ databaseId: 'dsHZFDFsr6veCueEqrPSuI', pageSize: 200, startCursor: cursor })
+      .then(function(r){
+        acc = acc.concat(r.results || []);
+        var next = r.nextCursor;
+        if (r.hasMore && next && next !== cursor && (r.results || []).length) return loadNodes(next, acc, guard + 1);
+        return acc;
+      })
+      .catch(function(err){ console.error('[database] 节点加载失败:', err); return acc; });
+  }
+  function loadMaterials(cursor, acc, guard){
+    acc = acc || []; guard = guard || 0;
+    if (guard > 100) return Promise.resolve(acc);
+    return db.query({ databaseId: 'OybQF00KiIk4Q9VHZpyhns', pageSize: 200, startCursor: cursor })
+      .then(function(r){
+        acc = acc.concat(r.results || []);
+        var next = r.nextCursor;
+        if (r.hasMore && next && next !== cursor && (r.results || []).length) return loadMaterials(next, acc, guard + 1);
+        return acc;
+      })
+      .catch(function(err){ console.error('[database] 材料加载失败:', err); return acc; });
+  }
+  function getSchemas(){
+    return Promise.all([
+      db.getSchema({ databaseId: 'F72CTkFxd1jrepaIiIX6UL' }),
+      db.getSchema({ databaseId: 'dsHZFDFsr6veCueEqrPSuI' }),
+      db.getSchema({ databaseId: 'OybQF00KiIk4Q9VHZpyhns' })
+    ]).then(function(schemas){
+      schemas.forEach(function(schema){
+        (schema.properties || []).forEach(function(field){
+          if ((field.type === 'select' || field.type === 'multi_select') && field.config && field.config.options) {
+            SCHEMA_OPTIONS[field.name] = field.config.options;
+          }
+        });
+      });
+      renderSelectOptions();
+    }).catch(function(err){
+      console.error('[database] schema 加载失败:', err);
+      setSync('offline');
+    });
+  }
+  function refreshAll(){
+    setSync('syncing');
+    return loadSchools().then(function(rows){
+      state.schools = rows;
+      return loadNodes();
+    }).then(function(rows){
+      state.nodes = rows;
+      return loadMaterials();
+    }).then(function(rows){
+      state.materials = rows;
+      setSync('ok');
+      renderAll();
+    }).catch(function(err){
+      console.error('[database] 数据加载失败:', err);
+      setSync('offline');
+      renderAll(); // 用已有数据渲染，页面不空白
+    });
+  }
+
+  // ===== 渲染层（单向：只读 state，互不调用）=====
+  function renderAll(){
+    renderToday();
+    renderSchools();
+    renderNodes();
+    renderMaterials();
+  }
+
+  function renderToday(){
+    var box = $('#todayList');
+    var html = '';
+    var overdueNodes = [], dueNodes = [], todoMats = [];
+
+    state.nodes.forEach(function(n){
+      if (n['进度'] === '已完成') return;
+      var d = daysUntil(n['日期']);
+      if (d === null) return;
+      if (d < 0) overdueNodes.push({n:n, d:d});
+      else if (d <= 7) dueNodes.push({n:n, d:d});
+    });
+    state.materials.forEach(function(m){
+      if (m['状态'] === '待准备' || m['状态'] === '进行中') todoMats.push(m);
+    });
+
+    var total = overdueNodes.length + dueNodes.length + todoMats.length;
+    var countEl = $('#todayCount');
+    if (countEl) countEl.textContent = total + ' 项';
+
+    if (total === 0){
+      box.innerHTML = '<div class="card" style="text-align:center;padding:40px 20px;color:var(--text-faint);">今天没有待处理事项，安心复习吧 🌸</div>';
+      return;
+    }
+
+    if (overdueNodes.length){
+      html += '<div class="today-group-title"><span class="g-dot" style="background:var(--danger)"></span>已逾期 · 尽快处理</div>';
+      overdueNodes.forEach(function(o){
+        html += '<div class="today-item overdue">'
+          + '<div class="t-body"><div class="t-name">' + esc(o.n['事件']) + '</div>'
+          + '<div class="t-meta"><span class="tag tag-red">已逾期 ' + Math.abs(o.d) + ' 天</span>' + esc(fmtDateCn(o.n['日期'])) + '</div></div>'
+          + '<button class="btn btn-primary btn-sm" data-marknode="' + esc(o.n._id) + '">标记完成</button>'
+          + '</div>';
+      });
+    }
+    if (dueNodes.length){
+      html += '<div class="today-group-title"><span class="g-dot" style="background:var(--warning)"></span>今天 · 7 天内截止</div>';
+      dueNodes.forEach(function(o){
+        var tag = o.d === 0 ? '<span class="tag tag-yellow">今天到期</span>' : '<span class="tag tag-yellow">剩 ' + o.d + ' 天</span>';
+        html += '<div class="today-item due">'
+          + '<div class="t-body"><div class="t-name">' + esc(o.n['事件']) + '</div>'
+          + '<div class="t-meta">' + tag + esc(fmtDateCn(o.n['日期'])) + '</div></div>'
+          + '<button class="btn btn-primary btn-sm" data-marknode="' + esc(o.n._id) + '">标记完成</button>'
+          + '</div>';
+      });
+    }
+    if (todoMats.length){
+      html += '<div class="today-group-title"><span class="g-dot" style="background:var(--primary)"></span>待办材料</div>';
+      todoMats.forEach(function(m){
+        var cls = m['状态'] === '进行中' ? 'tag-yellow' : 'tag-gray';
+        html += '<div class="today-item">'
+          + '<div class="t-body"><div class="t-name">' + esc(m['材料']) + '</div>'
+          + '<div class="t-meta"><span class="tag ' + cls + '">' + esc(m['状态']) + '</span>' + esc(m['类型']) + '</div></div>'
+          + '<button class="btn btn-soft btn-sm" data-advmat="' + esc(m._id) + '">推进状态</button>'
+          + '</div>';
+      });
+    }
+    box.innerHTML = html;
+  }
+
+  function renderSchools(){
+    var box = $('#schoolList');
+    var countEl = $('#schoolCount');
+    if (countEl) countEl.textContent = state.schools.length + ' 所';
+    if (state.schools.length === 0){
+      box.innerHTML = '<div class="list-empty">还没有院校，点击上方添加第一所目标院校吧</div>';
+      return;
+    }
+    var html = '';
+    TIER_ORDER.forEach(function(tier){
+      var rows = state.schools.filter(function(s){ return s['梯队'] === tier; });
+      if (!rows.length) return;
+      html += '<div class="group-label">' + tier + ' · ' + rows.length + ' 所</div>';
+      rows.forEach(function(s){
+        html += '<div class="list-item">'
+          + '<div class="item-main">'
+          + '<div class="item-title"><span>' + esc(s['学校']) + '</span>'
+          + '<span class="badge b-tier-' + esc(s['梯队']) + '">' + esc(s['梯队']) + '</span>'
+          + (s['方向'] ? '<span class="badge b-dir">' + esc(s['方向']) + '</span>' : '')
+          + '<span class="badge b-status">' + esc(s['报名状态'] || '未开始') + '</span></div>'
+          + '<div class="item-meta">' + (s['城市'] ? '<span>📍 ' + esc(s['城市']) + '</span>' : '') + '</div>'
+          + (s['备注'] ? '<div class="item-note">' + esc(s['备注']) + '</div>' : '')
+          + '</div>'
+          + '<div class="item-actions">'
+          + (s['官网'] && s['官网'].link ? '<a class="btn btn-ghost btn-sm" href="' + esc(s['官网'].link) + '" target="_blank" rel="noopener">官网</a>' : '')
+          + '<button class="btn btn-soft btn-sm" data-schooladv="' + esc(s._id) + '">推进状态</button>'
+          + '<button class="btn btn-danger btn-sm" data-del="' + esc(s._id) + '" data-tbl="school">删除</button>'
+          + '</div></div>';
+      });
+    });
+    box.innerHTML = html;
+  }
+
+  function renderNodes(){
+    var box = $('#nodeList');
+    var countEl = $('#nodeCount');
+    if (countEl) countEl.textContent = state.nodes.length + ' 个';
+    if (state.nodes.length === 0){
+      box.innerHTML = '<div class="list-empty">还没有节点，先把六级考试加进来吧</div>';
+      return;
+    }
+    var rows = state.nodes.slice().sort(function(a,b){
+      var da = dateOnly(a['日期']) || '9999';
+      var db2 = dateOnly(b['日期']) || '9999';
+      return da < db2 ? -1 : (da > db2 ? 1 : 0);
+    });
+    var html = '';
+    rows.forEach(function(n){
+      var done = n['进度'] === '已完成';
+      var d = daysUntil(n['日期']);
+      var pill = '';
+      if (done) pill = '<span class="day-pill day-done">已完成</span>';
+      else if (d === null) pill = '';
+      else if (d < 0) pill = '<span class="day-pill day-overdue">逾期 ' + Math.abs(d) + ' 天</span>';
+      else if (d === 0) pill = '<span class="day-pill day-soon">今天</span>';
+      else if (d <= 7) pill = '<span class="day-pill day-soon">剩 ' + d + ' 天</span>';
+      else pill = '<span class="day-pill day-normal">剩 ' + d + ' 天</span>';
+
+      html += '<div class="list-item">'
+        + '<div class="item-main">'
+        + '<div class="item-title"><span>' + esc(n['事件']) + '</span>'
+        + (n['优先级'] ? '<span class="badge b-pri-' + esc(n['优先级']) + '">' + esc(n['优先级']) + '</span>' : '')
+        + (done ? '<span class="badge b-status-done">已完成</span>' : '<span class="badge b-status">待办</span>')
+        + '</div>'
+        + '<div class="item-meta">' + pill + '<span>' + esc(fmtDateCn(n['日期'])) + '</span></div>'
+        + (n['备注'] ? '<div class="item-note">' + esc(n['备注']) + '</div>' : '')
+        + '</div>'
+        + '<div class="item-actions">'
+        + (done ? '<button class="btn btn-ghost btn-sm" data-unmarknode="' + esc(n._id) + '">撤销</button>'
+               : '<button class="btn btn-primary btn-sm" data-marknode="' + esc(n._id) + '">完成</button>')
+        + '<button class="btn btn-danger btn-sm" data-del="' + esc(n._id) + '" data-tbl="node">删除</button>'
+        + '</div></div>';
+    });
+    box.innerHTML = html;
+  }
+
+  function renderMaterials(){
+    var box = $('#materialList');
+    var countEl = $('#materialCount');
+    if (countEl) countEl.textContent = state.materials.length + ' 项';
+    if (state.materials.length === 0){
+      box.innerHTML = '<div class="list-empty">还没有材料，先加一份个人简历吧</div>';
+      return;
+    }
+    var html = '';
+    MAT_ORDER.forEach(function(type){
+      var rows = state.materials.filter(function(m){ return m['类型'] === type; });
+      if (!rows.length) return;
+      html += '<div class="group-label">' + type + ' · ' + rows.length + ' 项</div>';
+      rows.forEach(function(m){
+        var st = m['状态'] || '待准备';
+        var stCls = st === '已完成' ? 'b-status-done' : (st === '进行中' ? 'b-status-doing' : 'b-status');
+        html += '<div class="list-item">'
+          + '<div class="item-main">'
+          + '<div class="item-title"><span>' + esc(m['材料']) + '</span>'
+          + '<span class="badge b-dir">' + esc(m['类型']) + '</span>'
+          + '<span class="badge ' + stCls + '">' + esc(st) + '</span></div>'
+          + (m['备注'] ? '<div class="item-note">' + esc(m['备注']) + '</div>' : '')
+          + '</div>'
+          + '<div class="item-actions">'
+          + (st !== '已完成' ? '<button class="btn btn-primary btn-sm" data-advmat="' + esc(m._id) + '">' + (st === '待准备' ? '开始准备' : '标记完成') + '</button>' : '')
+          + '<button class="btn btn-danger btn-sm" data-del="' + esc(m._id) + '" data-tbl="material">删除</button>'
+          + '</div></div>';
+      });
+    });
+    box.innerHTML = html;
+  }
+
+  // ===== 表单 select 填充 =====
+  function renderSelectOptions(){
+    $all('select').forEach(function(sel){
+      var field = sel.getAttribute('name');
+      var opts = SCHEMA_OPTIONS[field];
+      if (!opts) return;
+      var keep = sel.value;
+      sel.innerHTML = '<option value="">请选择</option>';
+      opts.forEach(function(o){
+        var opt = document.createElement('option');
+        opt.value = o.id;
+        opt.textContent = o.text;
+        sel.appendChild(opt);
+      });
+      if (keep) sel.value = keep;
+    });
+  }
+
+  // ===== 表单缓存（localStorage）=====
+  function cacheKey(name){ return 'wb_baoyan_form_' + name; }
+  function saveForm(name, form){
+    try{
+      var data = {};
+      $all('input,select,textarea', form).forEach(function(el){
+        if (el.name && el.type !== 'submit' && el.type !== 'button') data[el.name] = el.value;
+      });
+      localStorage.setItem(cacheKey(name), JSON.stringify(data));
+    }catch(e){}
+  }
+  function restoreForm(name, form){
+    try{
+      var raw = localStorage.getItem(cacheKey(name));
+      if (!raw) return;
+      var data = JSON.parse(raw);
+      $all('input,select,textarea', form).forEach(function(el){
+        if (el.name && data[el.name] !== undefined) el.value = data[el.name];
+      });
+    }catch(e){}
+  }
+  function clearFormCache(name){
+    try{ localStorage.removeItem(cacheKey(name)); }catch(e){}
+  }
+  function bindFormCache(name, form){
+    var debounce = null;
+    form.addEventListener('input', function(){
+      clearTimeout(debounce);
+      debounce = setTimeout(function(){ saveForm(name, form); }, 300);
+    });
+    form.addEventListener('change', function(){ saveForm(name, form); });
+  }
+
+  // ===== 事件处理 =====
+  function bindEvents(){
+    // 导航切换（侧边栏 + 移动 Tab）
+    $all('.nav-item, .tab-item').forEach(function(a){
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        switchView(a.getAttribute('data-view'));
+      });
+    });
+
+    // 侧边栏收起
+    $('#collapseBtn').addEventListener('click', function(){
+      var sb = $('#sidebar');
+      sb.classList.toggle('collapsed');
+      var ctext = $('.c-text');
+      ctext.textContent = sb.classList.contains('collapsed') ? '' : '收起导航';
+    });
+
+    // 表单提交
+    $('#schoolForm').addEventListener('submit', onSchoolSubmit);
+    $('#nodeForm').addEventListener('submit', onNodeSubmit);
+    $('#materialForm').addEventListener('submit', onMaterialSubmit);
+    bindFormCache('school', $('#schoolForm'));
+    bindFormCache('node', $('#nodeForm'));
+    bindFormCache('material', $('#materialForm'));
+
+    // 备份 / 恢复 / 清空示例
+    $('#exportBtn').addEventListener('click', exportJson);
+    $('#importBtn').addEventListener('click', function(){ $('#importFile').click(); });
+    $('#importFile').addEventListener('change', importJson);
+    $('#clearExampleBtn').addEventListener('click', clearExamples);
+
+    // 列表操作（事件委托）
+    document.addEventListener('click', function(e){
+      var t = e.target.closest ? e.target.closest('[data-marknode],[data-unmarknode],[data-advmat],[data-schooladv],[data-del]') : null;
+      if (!t) return;
+      if (t.hasAttribute('data-marknode')) { markNode(t.getAttribute('data-marknode'), true); }
+      else if (t.hasAttribute('data-unmarknode')) { markNode(t.getAttribute('data-unmarknode'), false); }
+      else if (t.hasAttribute('data-advmat')) { advanceMaterial(t.getAttribute('data-advmat')); }
+      else if (t.hasAttribute('data-schooladv')) { advanceSchool(t.getAttribute('data-schooladv')); }
+      else if (t.hasAttribute('data-del')) { deleteRecord(t.getAttribute('data-tbl'), t.getAttribute('data-del')); }
+    });
+
+    // 数据订阅
+    if (db && typeof db.onUpdated === 'function'){
+      var deb = null;
+      db.onUpdated(function(payload){
+        var ids = (payload && payload.databaseIds) || [];
+        if (ids.indexOf(DB_SCHOOL) === -1 && ids.indexOf(DB_NODE) === -1 && ids.indexOf(DB_MATERIAL) === -1) return;
+        clearTimeout(deb);
+        deb = setTimeout(refreshAll, 300);
+      });
+    }
+  }
+
+  function switchView(view){
+    $all('.view').forEach(function(v){ v.classList.remove('active'); });
+    var target = $('#view-' + view);
+    if (target) target.classList.add('active');
+    $all('.nav-item').forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-view') === view); });
+    $all('.tab-item').forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-view') === view); });
+  }
+
+  function onSchoolSubmit(e){
+    e.preventDefault();
+    var form = e.target;
+    var v = function(n){ var el = form.querySelector('[name="' + n + '"]'); return el ? el.value.trim() : ''; };
+    if (!v('学校')) { toast('请填写学校名称', true); return; }
+    var properties = {};
+    if (v('学校')) properties['学校'] = { text: v('学校') };
+    if (v('城市')) properties['城市'] = { text: v('城市') };
+    if (v('梯队')) properties['梯队'] = { select: v('梯队') };
+    if (v('方向')) properties['方向'] = { select: v('方向') };
+    if (v('报名状态')) properties['报名状态'] = { select: v('报名状态') };
+    if (v('官网')) properties['官网'] = { url: { text: '官网', link: v('官网') } };
+    if (v('备注')) properties['备注'] = { text: v('备注') };
+    submitForm(form, 'school', properties, 'school');
+  }
+
+  function onNodeSubmit(e){
+    e.preventDefault();
+    var form = e.target;
+    var v = function(n){ var el = form.querySelector('[name="' + n + '"]'); return el ? el.value.trim() : ''; };
+    if (!v('事件') || !v('日期')) { toast('请填写事件和日期', true); return; }
+    var properties = {
+      '事件': { text: v('事件') },
+      '日期': { date: v('日期') },
+      '进度': { select: optId('进度','待办') }
+    };
+    if (v('优先级')) properties['优先级'] = { select: v('优先级') };
+    if (v('备注')) properties['备注'] = { text: v('备注') };
+    submitForm(form, 'node', properties, 'node');
+  }
+
+  function onMaterialSubmit(e){
+    e.preventDefault();
+    var form = e.target;
+    var v = function(n){ var el = form.querySelector('[name="' + n + '"]'); return el ? el.value.trim() : ''; };
+    if (!v('材料')) { toast('请填写材料名称', true); return; }
+    var properties = {
+      '材料': { text: v('材料') },
+      '状态': { select: optId('状态','待准备') }
+    };
+    if (v('类型')) properties['类型'] = { select: v('类型') };
+    if (v('备注')) properties['备注'] = { text: v('备注') };
+    submitForm(form, 'material', properties, 'material');
+  }
+
+  function submitForm(form, tbl, properties, cacheName){
+    var btn = form.querySelector('[type="submit"]');
+    if (btn){ btn.disabled = true; btn.textContent = '保存中...'; }
+    setSync('syncing');
+    var p;
+    if (tbl === 'school') p = db.addRecord({ databaseId: 'F72CTkFxd1jrepaIiIX6UL', properties: properties });
+    else if (tbl === 'node') p = db.addRecord({ databaseId: 'dsHZFDFsr6veCueEqrPSuI', properties: properties });
+    else p = db.addRecord({ databaseId: 'OybQF00KiIk4Q9VHZpyhns', properties: properties });
+    p.then(function(){
+        form.reset();
+        clearFormCache(cacheName);
+        toast('已保存');
+        return refreshAll();
+      })
+      .catch(function(err){
+        console.error('[database] 保存失败:', err);
+        toast('保存失败，请重试', true);
+        setSync('offline');
+      })
+      .finally(function(){
+        if (btn){ btn.disabled = false; btn.textContent = '保存'; }
+      });
+  }
+
+  function markNode(recordId, done){
+    setSync('syncing');
+    db.updateRecord({
+      databaseId: 'dsHZFDFsr6veCueEqrPSuI',
+      recordId: recordId,
+      properties: { '进度': { select: optId('进度', done ? '已完成' : '待办') } }
+    }).then(function(){ toast(done ? '已标记完成' : '已撤销'); return refreshAll(); })
+      .catch(function(err){ console.error(err); toast('操作失败', true); setSync('offline'); });
+  }
+
+  function advanceMaterial(recordId){
+    var m = state.materials.filter(function(x){ return x._id === recordId; })[0];
+    if (!m) return;
+    var cur = m['状态'] || '待准备';
+    var next = cur === '待准备' ? '进行中' : '已完成';
+    setSync('syncing');
+    db.updateRecord({
+      databaseId: 'OybQF00KiIk4Q9VHZpyhns',
+      recordId: recordId,
+      properties: { '状态': { select: optId('状态', next) } }
+    }).then(function(){ toast('已更新为「' + next + '」'); return refreshAll(); })
+      .catch(function(err){ console.error(err); toast('操作失败', true); setSync('offline'); });
+  }
+
+  function advanceSchool(recordId){
+    var s = state.schools.filter(function(x){ return x._id === recordId; })[0];
+    if (!s) return;
+    var flow = ['未开始','已报名','已入营','已offer','已放弃'];
+    var cur = s['报名状态'] || '未开始';
+    var idx = flow.indexOf(cur);
+    var next = (idx >= 0 && idx < flow.length - 1) ? flow[idx + 1] : flow[0];
+    setSync('syncing');
+    db.updateRecord({
+      databaseId: 'F72CTkFxd1jrepaIiIX6UL',
+      recordId: recordId,
+      properties: { '报名状态': { select: optId('报名状态', next) } }
+    }).then(function(){ toast('已更新为「' + next + '」'); return refreshAll(); })
+      .catch(function(err){ console.error(err); toast('操作失败', true); setSync('offline'); });
+  }
+
+  function deleteRecord(tbl, recordId){
+    if (!confirm('确定删除这条记录吗？删除后不可恢复。')) return;
+    setSync('syncing');
+    var p;
+    if (tbl === 'school') p = db.deleteRecord({ databaseId: 'F72CTkFxd1jrepaIiIX6UL', recordId: recordId });
+    else if (tbl === 'node') p = db.deleteRecord({ databaseId: 'dsHZFDFsr6veCueEqrPSuI', recordId: recordId });
+    else p = db.deleteRecord({ databaseId: 'OybQF00KiIk4Q9VHZpyhns', recordId: recordId });
+    p.then(function(){ toast('已删除'); return refreshAll(); })
+      .catch(function(err){ console.error(err); toast('删除失败', true); setSync('offline'); });
+  }
+
+  function clearExamples(){
+    if (!confirm('确定清空示例数据吗？只会删除预置的示例记录，你后来自己添加的数据会保留。')) return;
+    setSync('syncing');
+    var p = Promise.resolve();
+    EXAMPLE_IDS.school.forEach(function(id){ p = p.then(function(){ return db.deleteRecord({ databaseId: 'F72CTkFxd1jrepaIiIX6UL', recordId: id }); }); });
+    EXAMPLE_IDS.node.forEach(function(id){ p = p.then(function(){ return db.deleteRecord({ databaseId: 'dsHZFDFsr6veCueEqrPSuI', recordId: id }); }); });
+    EXAMPLE_IDS.material.forEach(function(id){ p = p.then(function(){ return db.deleteRecord({ databaseId: 'OybQF00KiIk4Q9VHZpyhns', recordId: id }); }); });
+    p.then(function(){ toast('示例数据已清空'); return refreshAll(); })
+      .catch(function(err){ console.error(err); toast('清空失败', true); setSync('offline'); });
+  }
+
+  // ===== 备份 / 恢复 =====
+  function exportJson(){
+    var data = { version: 1, exportedAt: new Date().toISOString(), schools: state.schools, nodes: state.nodes, materials: state.materials };
+    var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = '保研工作台备份_' + todayStr + '.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    toast('备份已导出');
+  }
+
+  function importJson(e){
+    var file = e.target.files && e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(){
+      try{
+        var data = JSON.parse(reader.result);
+        var schools = data.schools || [];
+        var nodes = data.nodes || [];
+        var materials = data.materials || [];
+        if (!schools.length && !nodes.length && !materials.length){ toast('文件里没有数据', true); return; }
+        var ops = [];
+        schools.forEach(function(r){
+          ops.push({ tbl: 'school', props: pickProps(r, ['学校','城市','梯队','方向','报名状态','官网','备注']) });
+        });
+        nodes.forEach(function(r){
+          ops.push({ tbl: 'node', props: pickProps(r, ['事件','日期','优先级','进度','备注']) });
+        });
+        materials.forEach(function(r){
+          ops.push({ tbl: 'material', props: pickProps(r, ['材料','类型','状态','备注']) });
+        });
+        setSync('syncing');
+        var p = Promise.resolve();
+        ops.forEach(function(op){
+          p = p.then(function(){
+            if (op.tbl === 'school') return db.addRecord({ databaseId: 'F72CTkFxd1jrepaIiIX6UL', properties: op.props });
+            if (op.tbl === 'node') return db.addRecord({ databaseId: 'dsHZFDFsr6veCueEqrPSuI', properties: op.props });
+            return db.addRecord({ databaseId: 'OybQF00KiIk4Q9VHZpyhns', properties: op.props });
+          });
+        });
+        p.then(function(){ toast('已恢复 ' + ops.length + ' 条记录'); return refreshAll(); })
+          .catch(function(err){ console.error(err); toast('恢复失败', true); setSync('offline'); });
+      }catch(err){
+        toast('文件解析失败', true);
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  }
+
+  function pickProps(row, fields){
+    var out = {};
+    fields.forEach(function(f){
+      if (row[f] !== undefined && row[f] !== null && f !== '_id' && f !== 'record_id'){
+        var v = row[f];
+        // 根据类型还原 PropertyValue
+        if (f === '官网') out[f] = { url: (v && v.link) ? { text: (v.text || '官网'), link: v.link } : { text: '', link: '' } };
+        else if (f === '日期') out[f] = { date: dateOnly(v) };
+        else if (typeof v === 'number') out[f] = { number: v };
+        else if (typeof v === 'boolean') out[f] = { checkbox: v };
+        else out[f] = { text: String(v) };
+      }
+    });
+    // 修正 select 字段
+    ['梯队','方向','报名状态','优先级','进度','类型','状态'].forEach(function(f){
+      if (row[f] && typeof row[f] === 'string') out[f] = { select: row[f] };
+    });
+    return out;
+  }
+
+  // ===== 初始化 =====
+  function init(){
+    bindEvents();
+    if (!db){
+      $('#todayList').innerHTML = '<div class="card" style="text-align:center;padding:40px 20px;color:var(--text-sub);">当前环境未接入在线数据能力，请通过资料库链接打开本工作台。</div>';
+      setSync('offline');
+      return;
+    }
+    getSchemas().then(function(){
+      restoreForm('school', $('#schoolForm'));
+      restoreForm('node', $('#nodeForm'));
+      restoreForm('material', $('#materialForm'));
+      return refreshAll();
+    });
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
